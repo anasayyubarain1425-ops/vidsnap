@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     const { stdout, stderr } = await execFileAsync(
       'yt-dlp',
       ['--get-url', '--no-playlist', '--no-warnings',
-       '--extractor-args', 'youtube:player_client=android',
+       '--extractor-args', 'youtube:player_client=tv_embedded',
        '-f', safeFormatId, safeUrl],
       { timeout: 30000 }
     );
@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
     const { stdout: nameOut } = await execFileAsync(
       'yt-dlp',
       ['--get-filename', '--no-playlist', '--no-warnings',
-       '--extractor-args', 'youtube:player_client=android',
+       '--extractor-args', 'youtube:player_client=tv_embedded',
        '-f', safeFormatId, safeUrl],
       { timeout: 15000 }
     );

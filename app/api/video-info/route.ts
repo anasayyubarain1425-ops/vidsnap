@@ -139,10 +139,11 @@ export async function POST(req: NextRequest) {
     }
 
     // Use execFile with argument array — no shell interpolation, no injection risk
+    // tv_embedded gives all quality levels (144p→2160p) for YouTube
     const { stdout, stderr } = await execFileAsync(
       'yt-dlp',
       ['--dump-json', '--no-playlist', '--no-warnings',
-       '--extractor-args', 'youtube:player_client=android',
+       '--extractor-args', 'youtube:player_client=tv_embedded',
        safeUrl],
       { timeout: 30000 }
     );

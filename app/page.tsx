@@ -271,16 +271,11 @@ export default function Home() {
         return;
       }
 
-      // Filter to allowed qualities: 1080p, 720p, 480p + Best available + Audio
-      const filtered = data.formats.filter(f => {
-        if (f.label === 'Best available quality') return true;
-        if (f.resolution === 'audio only') return true;
-        return QUALITY_LABELS.some(q => f.label.startsWith(q));
-      });
-      data.formats = filtered.length > 0 ? filtered : data.formats;
-
+      // Show all formats; select "Best available quality" by default
       setVideoInfo(data);
-      setSelectedFormat(data.formats[0] ?? null);
+      // Default to best quality option
+      const best = data.formats.find(f => f.label === 'Best available quality') ?? data.formats[0] ?? null;
+      setSelectedFormat(best);
       setStep('ready');
     } catch {
       setError('Network error. Please check your connection and try again.');
@@ -305,27 +300,18 @@ export default function Home() {
     if (!user.canDownload) { setShowPaywall(true); return; }
 
     setStep('downloading');
-    setDownloadStatus('Preparing download...');
+    setDownloadStatus('Connecting to server...');
     setDownloadProgress(0);
     setError('');
 
     try {
-      const res = await fetch('/api/download', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: videoInfo.webpage_url, format_id: selectedFormat.format_id }),
-      });
-      const data = await res.json() as { download_url?: string; filename?: string; error?: string };
-      if (!res.ok || data.error) {
-        setError(data.error ?? 'Failed to get download link');
-        setStep('ready');
-        setDownloadStatus('');
-        return;
-      }
+      // Build filename from video title + format ext
+      const safeTitle = videoInfo.title.replace(/[/\\:*?"<>|]/g, '_').slice(0, 80);
+      const ext = selectedFormat.ext ?? 'mp4';
+      const filename = `${safeTitle}.${ext}`;
 
-      const filename = data.filename ?? 'video.mp4';
-      setDownloadStatus('Downloading video…');
-      setDownloadProgress(2);
+      setDownloadStatus('Fetching video... (this may take 30–60 seconds)');
+      setDownloadProgress(5);
 
       const params = new URLSearchParams({
         url: videoInfo.webpage_url,
@@ -348,8 +334,17 @@ export default function Home() {
           setDownloadStatus('');
           return;
         }
-        throw new Error(errData.error ?? 'Stream request failed');
+        if (errData.code === 'UNAUTHENTICATED') {
+          setAuthModal('login');
+          setStep('ready');
+          setDownloadStatus('');
+          return;
+        }
+        throw new Error(errData.error ?? 'Download failed. Please try again.');
       }
+
+      setDownloadStatus('Downloading...');
+      setDownloadProgress(10);
 
       const contentLength = streamRes.headers.get('Content-Length');
       const total = contentLength ? parseInt(contentLength, 10) : 0;
@@ -363,7 +358,10 @@ export default function Home() {
         chunks.push(value);
         received += value.length;
         if (total > 0) {
-          setDownloadProgress(Math.min(99, Math.round((received / total) * 100)));
+          setDownloadProgress(Math.min(95, 10 + Math.round((received / total) * 85)));
+        } else {
+          // No content-length: pulse the bar
+          setDownloadProgress(prev => Math.min(90, prev + 1));
         }
       }
 
@@ -384,10 +382,11 @@ export default function Home() {
       // Refresh user quota
       await refreshUser();
 
-      setDownloadStatus('✓ File saved to your downloads folder!');
-      setTimeout(() => { setStep('ready'); setDownloadStatus(''); setDownloadProgress(0); }, 4000);
-    } catch {
-      setError('Download failed. Please try again.');
+      setDownloadStatus('✅ Download complete! Check your Downloads folder.');
+      setTimeout(() => { setStep('ready'); setDownloadStatus(''); setDownloadProgress(0); }, 5000);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Download failed. Please try again.';
+      setError(msg);
       setStep('ready');
       setDownloadStatus('');
       setDownloadProgress(0);

@@ -122,7 +122,7 @@ export async function GET(req: NextRequest) {
         '--no-warnings',
         '--no-part',
         '--no-mtime',
-        '--extractor-args', 'youtube:player_client=android',
+        '--extractor-args', 'youtube:player_client=tv_embedded',
         '-f', safeFormat,
         '-o', outTemplate,
         safeUrl,
