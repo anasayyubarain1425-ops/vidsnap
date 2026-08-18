@@ -14,8 +14,11 @@ function validateUrl(url: string): string {
 }
 
 function validateFormatId(formatId: string): string {
-  // Allow alphanumeric, +, /, -, ., comma — no shell chars
-  if (!/^[\w+/.\-,]+$/.test(formatId)) {
+  // Block only shell-dangerous characters
+  if (/[;&$`\r\n\0]/.test(formatId)) {
+    throw new Error('Invalid format ID');
+  }
+  if (!formatId || formatId.length > 500) {
     throw new Error('Invalid format ID');
   }
   return formatId;

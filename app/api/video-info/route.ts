@@ -56,19 +56,23 @@ function buildFormats(rawFormats: Record<string, unknown>[]): VideoFormat[] {
     const width = typeof f.width === 'number' ? f.width : null;
     const format_id = String(f.format_id ?? '');
 
-    // Skip fragments / manifests / video-only streams that need ffmpeg merge
+    // Skip fragments / manifests / storyboards
     if (['mhtml', 'sb0', 'sb1', 'sb2', 'sb3'].includes(ext)) continue;
-
-    // Skip video-only formats (acodec=none) — we have no ffmpeg to merge them
-    if (vcodec !== 'none' && acodec === 'none') continue;
 
     let label = '';
     let resolution = '';
+    let usedFormatId = format_id;
 
     if (vcodec !== 'none' && acodec !== 'none' && height) {
-      // Has both video and audio in one container
+      // Single-container: has both video and audio
       resolution = width ? `${width}x${height}` : `${height}p`;
       label = `${height}p (${ext.toUpperCase()})`;
+    } else if (vcodec !== 'none' && acodec === 'none' && height) {
+      // Video-only: use yt-dlp to pick best audio automatically
+      resolution = width ? `${width}x${height}` : `${height}p`;
+      label = `${height}p (${ext.toUpperCase()})`;
+      // Use format selector that merges best audio — yt-dlp handles this natively
+      usedFormatId = `${format_id}+bestaudio/best[height<=${height}]`;
     } else if (vcodec === 'none' && acodec !== 'none') {
       resolution = 'audio only';
       label = `Audio only (${ext.toUpperCase()})`;
@@ -81,7 +85,7 @@ function buildFormats(rawFormats: Record<string, unknown>[]): VideoFormat[] {
     seen.add(label);
 
     result.push({
-      format_id,
+      format_id: usedFormatId,
       ext,
       resolution,
       filesize: typeof f.filesize === 'number' ? f.filesize : null,
@@ -92,9 +96,9 @@ function buildFormats(rawFormats: Record<string, unknown>[]): VideoFormat[] {
     });
   }
 
-  // "Best available" — picks the best single-container format, no merge needed
+  // "Best available" fallback
   result.unshift({
-    format_id: 'best[ext=mp4]/best[ext=webm]/best',
+    format_id: 'bestvideo+bestaudio/best',
     ext: 'mp4',
     resolution: 'best',
     filesize: null,
