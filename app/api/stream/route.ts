@@ -24,9 +24,14 @@ function validateUrl(url: string): string {
 }
 
 function validateFormatId(formatId: string): string {
-  // Allow: alphanumeric, +, /, -, ., comma, [, ], =
-  // These are all used in yt-dlp format selectors like best[ext=mp4]/best
-  if (!/^[\w+/.\-,[\]=]+$/.test(formatId)) {
+  // Allow all characters used in yt-dlp format selectors and real format IDs
+  // including spaces, parens, @, |, +, /, -, ., comma, [, ], =, ~, ^, *, !, <, >
+  // Only block shell-dangerous characters: ;, &, $, `, \n, \r, null bytes
+  if (/[;&$`\r\n\0]/.test(formatId)) {
+    throw new Error('Invalid format ID');
+  }
+  // Must not be empty and must have reasonable length
+  if (!formatId || formatId.length > 500) {
     throw new Error('Invalid format ID');
   }
   return formatId;
