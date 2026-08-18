@@ -1,8 +1,11 @@
 import type { NextConfig } from 'next';
 import dotenv from 'dotenv';
+import { existsSync } from 'fs';
 
-// Load .env into process.env (dotenv.populate is used internally to inject)
-dotenv.config({ path: '.env', override: true });
+// Load .env only if it exists (not present on Railway/CI — env vars injected directly)
+if (existsSync('.env')) {
+  dotenv.config({ path: '.env', override: true });
+}
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,

@@ -9,7 +9,10 @@ cmds = [
 ]
 
 [phases.build]
-cmds = ["pnpm run build"]
+cmds = [
+  "touch .env",
+  "pnpm run build"
+]
 
 [start]
 cmd = "pnpm start"
