@@ -66,7 +66,7 @@ function ResetForm() {
             WebkitTextFillColor: 'transparent',
             marginBottom: '0.25rem',
           }}>
-            VidSnap
+            QuickSnap
           </div>
           <p style={{ color: '#6b7280', fontSize: '0.85rem', margin: 0 }}>Set a new password</p>
         </div>
@@ -171,7 +171,7 @@ function ResetForm() {
             </button>
 
             <p style={{ textAlign: 'center', fontSize: '0.82rem', color: '#6b7280', margin: 0 }}>
-              <a href="/" style={{ color: '#00d4ff', textDecoration: 'none' }}>← Back to VidSnap</a>
+              <a href="/" style={{ color: '#00d4ff', textDecoration: 'none' }}>← Back to QuickSnap</a>
             </p>
           </form>
         )}

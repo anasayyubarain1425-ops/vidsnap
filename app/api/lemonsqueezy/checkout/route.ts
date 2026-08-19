@@ -26,7 +26,7 @@ export async function POST() {
     return NextResponse.json({ error: 'Account not found.' }, { status: 401 });
   }
 
-  const origin = process.env.NEXT_PUBLIC_APP_URL ?? 'https://vidsnap-three.vercel.app';
+  const origin = process.env.NEXT_PUBLIC_APP_URL ?? 'https://quicksnap-three.vercel.app';
 
   const { data, error } = await createCheckout(LS_STORE_ID, LS_VARIANT_ID, {
     checkoutOptions: {
@@ -41,7 +41,7 @@ export async function POST() {
     productOptions: {
       enabledVariants: [parseInt(LS_VARIANT_ID)],
       redirectUrl: `${origin}/?subscribed=1`,
-      receiptButtonText: 'Go to VidSnap',
+      receiptButtonText: 'Go to QuickSnap',
       receiptThankYouNote: 'Thank you! Your subscription is now active.',
     },
   });

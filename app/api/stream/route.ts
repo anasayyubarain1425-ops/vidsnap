@@ -110,8 +110,8 @@ export async function GET(req: NextRequest) {
 
   // Use a base path without extension — yt-dlp will add the real extension
   const uid      = randomUUID();
-  const tmpBase  = join(tmpdir(), `vidsnap-${uid}`);
-  // Output template: base.%(ext)s  → yt-dlp writes e.g. vidsnap-<uid>.mp4
+  const tmpBase  = join(tmpdir(), `quicksnap-${uid}`);
+  // Output template: base.%(ext)s  → yt-dlp writes e.g. quicksnap-<uid>.mp4
   const outTemplate = `${tmpBase}.%(ext)s`;
 
   try {
@@ -132,7 +132,7 @@ export async function GET(req: NextRequest) {
 
     // Find the actual file yt-dlp created (it chooses the extension)
     const tmpDir = tmpdir();
-    const files  = readdirSync(tmpDir).filter(f => f.startsWith(`vidsnap-${uid}`));
+    const files  = readdirSync(tmpDir).filter(f => f.startsWith(`quicksnap-${uid}`));
     const tmpFile = files.length > 0 ? join(tmpDir, files[0]) : null;
 
     if (!tmpFile || !existsSync(tmpFile)) {
@@ -207,7 +207,7 @@ export async function GET(req: NextRequest) {
     try {
       const tmpDir = tmpdir();
       readdirSync(tmpDir)
-        .filter(f => f.startsWith(`vidsnap-${uid}`))
+        .filter(f => f.startsWith(`quicksnap-${uid}`))
         .forEach(f => { try { unlinkSync(join(tmpDir, f)); } catch { /* ignore */ } });
     } catch { /* ignore */ }
 
