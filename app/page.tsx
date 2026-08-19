@@ -192,30 +192,13 @@ export default function Home() {
     if (!user) { setAuthModal('login'); return; }
     setStripeLoading(true);
     try {
-      // Try Paddle first (works in Pakistan), fall back to Stripe
-      const paddleToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
-      const usePaddle = Boolean(paddleToken && typeof window !== 'undefined' && (window as unknown as { Paddle?: unknown }).Paddle);
-
-      if (usePaddle) {
-        const res = await fetch('/api/paddle/checkout', { method: 'POST' });
-        const data = await res.json() as { transactionId?: string; error?: string };
-        if (data.transactionId && (window as unknown as { Paddle?: { Checkout?: { open: (opts: unknown) => void } } }).Paddle?.Checkout) {
-          (window as unknown as { Paddle: { Checkout: { open: (opts: unknown) => void } } }).Paddle.Checkout.open({
-            transactionId: data.transactionId,
-            settings: { theme: 'dark' },
-          });
-        } else {
-          setError(data.error ?? 'Failed to start checkout.');
-        }
+      // Lemon Squeezy checkout — works worldwide including Pakistan
+      const res = await fetch('/api/lemonsqueezy/checkout', { method: 'POST' });
+      const data = await res.json() as { url?: string; error?: string };
+      if (data.url) {
+        window.location.href = data.url;
       } else {
-        // Stripe fallback
-        const res = await fetch('/api/stripe/checkout', { method: 'POST' });
-        const data = await res.json() as { url?: string; error?: string };
-        if (data.url) {
-          window.location.href = data.url;
-        } else {
-          setError(data.error ?? 'Payment not configured yet. Please contact support.');
-        }
+        setError(data.error ?? 'Payment not configured yet. Please contact support.');
       }
     } finally {
       setStripeLoading(false);
