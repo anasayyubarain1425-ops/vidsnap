@@ -26,7 +26,7 @@ export async function POST() {
     return NextResponse.json({ error: 'Account not found.' }, { status: 401 });
   }
 
-  const origin = process.env.NEXT_PUBLIC_APP_URL ?? 'https://videograbtool-three.vercel.app';
+  const origin = process.env.NEXT_PUBLIC_APP_URL ?? 'https://videograbtool.com';
 
   const { data, error } = await createCheckout(LS_STORE_ID, LS_VARIANT_ID, {
     checkoutOptions: {

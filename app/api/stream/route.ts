@@ -7,6 +7,7 @@ import { join } from 'path';
 import { randomUUID } from 'crypto';
 import { getSession, FREE_DOWNLOAD_LIMIT } from '@/lib/session';
 import { rateLimit } from '@/lib/rate-limit';
+import { validatePublicUrl } from '@/lib/url-safety';
 import { hasUnlimitedAccess } from '@/lib/promo';
 import { db } from '@/db';
 import { users, downloadHistory } from '@/db/schemas/users';
@@ -15,12 +16,7 @@ import { eq, sql } from 'drizzle-orm';
 const execFileAsync = promisify(execFile);
 
 function validateUrl(url: string): string {
-  const trimmed = url.trim();
-  if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) {
-    throw new Error('Invalid URL');
-  }
-  new URL(trimmed);
-  return trimmed;
+  return validatePublicUrl(url);
 }
 
 function validateFormatId(formatId: string): string {

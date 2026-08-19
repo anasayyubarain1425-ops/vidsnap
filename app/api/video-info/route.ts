@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
 import { rateLimit } from '@/lib/rate-limit';
+import { validatePublicUrl } from '@/lib/url-safety';
 
 const execFileAsync = promisify(execFile);
 
@@ -27,14 +28,7 @@ export interface VideoInfo {
 }
 
 function validateUrl(url: string): string {
-  const trimmed = url.trim();
-  // Must be http/https
-  if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) {
-    throw new Error('Invalid URL: only http/https URLs are supported');
-  }
-  // Validate structure — throws on malformed URLs
-  new URL(trimmed);
-  return trimmed;
+  return validatePublicUrl(url);
 }
 
 function buildFormats(rawFormats: Record<string, unknown>[]): VideoFormat[] {
@@ -130,7 +124,7 @@ export async function POST(req: NextRequest) {
 
     let safeUrl: string;
     try {
-      safeUrl = validateUrl(body.url);
+      safeUrl = validatePublicUrl(body.url);
     } catch (e) {
       return NextResponse.json(
         { error: e instanceof Error ? e.message : 'Invalid URL' },
