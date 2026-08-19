@@ -1,17 +1,13 @@
 # Render.com deployment config
-# Free tier works for testing. Custom domains need a paid plan on Render.
-# The nixpacks.toml in this repo installs yt-dlp + ffmpeg automatically.
+# Uses Docker runtime (Dockerfile in repo installs yt-dlp + ffmpeg).
 services:
   - type: web
     name: videograbtool
-    runtime: nixpacks
+    runtime: docker
     plan: free
-    buildCommand: touch .env && pnpm run build
-    startCommand: pnpm start
+    dockerfilePath: ./Dockerfile
     healthCheckPath: /
     envVars:
-      - key: NODE_VERSION
-        value: 20.11.1
       - key: DATABASE_URL
         sync: false
       - key: SESSION_SECRET
