@@ -662,14 +662,10 @@ export default function Home() {
         padding: '0 24px', justifyContent: 'space-between',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{
-            width: 32, height: 32, borderRadius: 8,
-            background: 'linear-gradient(135deg, #00d4ff 0%, #00ff88 100%)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 16, fontWeight: 700, color: '#050505',
-          }}>⬇</div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="VideoGrabTool logo" width={32} height={32} style={{ borderRadius: 8, objectFit: 'contain' }} />
           <span style={{ fontWeight: 700, fontSize: 18, letterSpacing: '-0.5px', color: '#fff' }}>
-            Vid<span className="gradient-text">Snap</span>
+            VideoGrab<span className="gradient-text">Tool</span>
           </span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
