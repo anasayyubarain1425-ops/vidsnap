@@ -1084,6 +1084,8 @@ export default function Home() {
           <a href="/terms" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>Terms of Service</a>
           <a href="/privacy" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>Privacy Policy</a>
           <a href="/refunds" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>Refund Policy</a>
+          <a href="/cookies" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>Cookie Policy</a>
+          <a href="/disclaimer" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>Disclaimer</a>
           <a href="/about" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>About</a>
           <a href="/contact" style={{ color: '#374151', textDecoration: 'none' }}>Contact</a>
         </p>
