@@ -2,8 +2,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service – QuickSnap',
-  description: 'QuickSnap Terms of Service',
+  title: 'Terms of Service – VideoGrabTool',
+  description: 'VideoGrabTool Terms of Service',
 };
 
 export default function TermsPage() {
@@ -12,7 +12,7 @@ export default function TermsPage() {
       {/* Navbar */}
       <nav style={{ borderBottom: '1px solid #1e2030', padding: '0 24px', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Link href="/" style={{ textDecoration: 'none', background: 'linear-gradient(90deg,#00d4ff,#00ff88)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: 800, fontSize: 20, letterSpacing: '-0.5px' }}>
-          QuickSnap
+          VideoGrabTool
         </Link>
         <Link href="/" style={{ color: '#6b7280', textDecoration: 'none', fontSize: 14 }}>← Back to home</Link>
       </nav>
@@ -25,11 +25,11 @@ export default function TermsPage() {
         <p style={{ color: '#6b7280', marginBottom: 40, fontSize: 14 }}>Last updated: August 2025</p>
 
         <Section title="1. Acceptance of Terms">
-          <p>By accessing or using QuickSnap ("Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service.</p>
+          <p>By accessing or using VideoGrabTool ("Service"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the Service.</p>
         </Section>
 
         <Section title="2. Description of Service">
-          <p>QuickSnap provides a web-based tool that allows users to download publicly available videos from supported platforms for personal, non-commercial use. The Service operates on a freemium model: registered users receive 3 free downloads; additional downloads require a paid subscription.</p>
+          <p>VideoGrabTool provides a web-based tool that allows users to download publicly available videos from supported platforms for personal, non-commercial use. The Service operates on a freemium model: registered users receive 3 free downloads; additional downloads require a paid subscription.</p>
         </Section>
 
         <Section title="3. User Accounts">
@@ -37,7 +37,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="4. Acceptable Use">
-          <p>You agree to use QuickSnap only for lawful purposes. You must not:</p>
+          <p>You agree to use VideoGrabTool only for lawful purposes. You must not:</p>
           <ul style={{ marginTop: 10, paddingLeft: 20, lineHeight: 1.9 }}>
             <li>Download content that you do not have the right to access or download.</li>
             <li>Reproduce, distribute, or publicly display downloaded content in violation of the original content creator's rights or applicable copyright law.</li>
@@ -48,7 +48,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="5. Intellectual Property">
-          <p>QuickSnap does not host, store, or distribute video content. All videos are streamed directly from the original source. You acknowledge that downloaded content may be protected by copyright and that QuickSnap bears no responsibility for your use of such content.</p>
+          <p>VideoGrabTool does not host, store, or distribute video content. All videos are streamed directly from the original source. You acknowledge that downloaded content may be protected by copyright and that VideoGrabTool bears no responsibility for your use of such content.</p>
         </Section>
 
         <Section title="6. Subscriptions and Payments">
@@ -60,7 +60,7 @@ export default function TermsPage() {
         </Section>
 
         <Section title="8. Limitation of Liability">
-          <p>To the maximum extent permitted by law, QuickSnap and its operators shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use the Service.</p>
+          <p>To the maximum extent permitted by law, VideoGrabTool and its operators shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of or inability to use the Service.</p>
         </Section>
 
         <Section title="9. Termination">

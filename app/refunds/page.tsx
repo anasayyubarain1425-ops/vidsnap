@@ -2,8 +2,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Refund Policy – QuickSnap',
-  description: 'QuickSnap Refund Policy',
+  title: 'Refund Policy – VideoGrabTool',
+  description: 'VideoGrabTool Refund Policy',
 };
 
 export default function RefundsPage() {
@@ -12,7 +12,7 @@ export default function RefundsPage() {
       {/* Navbar */}
       <nav style={{ borderBottom: '1px solid #1e2030', padding: '0 24px', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Link href="/" style={{ textDecoration: 'none', background: 'linear-gradient(90deg,#00d4ff,#00ff88)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: 800, fontSize: 20, letterSpacing: '-0.5px' }}>
-          QuickSnap
+          VideoGrabTool
         </Link>
         <Link href="/" style={{ color: '#6b7280', textDecoration: 'none', fontSize: 14 }}>← Back to home</Link>
       </nav>
@@ -25,11 +25,11 @@ export default function RefundsPage() {
         <p style={{ color: '#6b7280', marginBottom: 40, fontSize: 14 }}>Last updated: August 2025</p>
 
         <Section title="Our Commitment">
-          <p>We want you to be satisfied with QuickSnap. If you're not happy with your subscription for any reason, we're here to help.</p>
+          <p>We want you to be satisfied with VideoGrabTool. If you're not happy with your subscription for any reason, we're here to help.</p>
         </Section>
 
         <Section title="30-Day Money-Back Guarantee">
-          <p>If you subscribed to QuickSnap Pro and are not satisfied, you may request a full refund within <strong style={{ color: '#00ff88' }}>30 days</strong> of your initial purchase. No questions asked.</p>
+          <p>If you subscribed to VideoGrabTool Pro and are not satisfied, you may request a full refund within <strong style={{ color: '#00ff88' }}>30 days</strong> of your initial purchase. No questions asked.</p>
           <p style={{ marginTop: 10 }}>To request a refund, contact us with the email address associated with your account within 30 days of the charge. We will process the refund within 5–10 business days back to your original payment method.</p>
         </Section>
 
@@ -40,7 +40,7 @@ export default function RefundsPage() {
 
         <Section title="How to Cancel">
           <ol style={{ marginTop: 10, paddingLeft: 20, lineHeight: 1.9 }}>
-            <li>Log in to your QuickSnap account.</li>
+            <li>Log in to your VideoGrabTool account.</li>
             <li>Go to <strong style={{ color: '#e2e8f0' }}>Account → Subscription</strong>.</li>
             <li>Click <strong style={{ color: '#e2e8f0' }}>Cancel Subscription</strong>.</li>
           </ol>
@@ -56,7 +56,7 @@ export default function RefundsPage() {
         </Section>
 
         <Section title="Contact Us">
-          <p>To request a refund or if you have any questions about billing, please contact us using the email address associated with your QuickSnap account. We aim to respond within 1 business day.</p>
+          <p>To request a refund or if you have any questions about billing, please contact us using the email address associated with your VideoGrabTool account. We aim to respond within 1 business day.</p>
         </Section>
       </main>
 

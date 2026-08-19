@@ -2,8 +2,8 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy – QuickSnap',
-  description: 'QuickSnap Privacy Policy',
+  title: 'Privacy Policy – VideoGrabTool',
+  description: 'VideoGrabTool Privacy Policy',
 };
 
 export default function PrivacyPage() {
@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       {/* Navbar */}
       <nav style={{ borderBottom: '1px solid #1e2030', padding: '0 24px', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Link href="/" style={{ textDecoration: 'none', background: 'linear-gradient(90deg,#00d4ff,#00ff88)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: 800, fontSize: 20, letterSpacing: '-0.5px' }}>
-          QuickSnap
+          VideoGrabTool
         </Link>
         <Link href="/" style={{ color: '#6b7280', textDecoration: 'none', fontSize: 14 }}>← Back to home</Link>
       </nav>
@@ -25,11 +25,11 @@ export default function PrivacyPage() {
         <p style={{ color: '#6b7280', marginBottom: 40, fontSize: 14 }}>Last updated: August 2025</p>
 
         <Section title="1. Introduction">
-          <p>QuickSnap ("we", "us", or "our") is committed to protecting your personal information. This Privacy Policy explains what data we collect, how we use it, and your rights regarding that data.</p>
+          <p>VideoGrabTool ("we", "us", or "our") is committed to protecting your personal information. This Privacy Policy explains what data we collect, how we use it, and your rights regarding that data.</p>
         </Section>
 
         <Section title="2. Information We Collect">
-          <p>We collect the following information when you use QuickSnap:</p>
+          <p>We collect the following information when you use VideoGrabTool:</p>
           <ul style={{ marginTop: 10, paddingLeft: 20, lineHeight: 1.9 }}>
             <li><strong style={{ color: '#e2e8f0' }}>Account data:</strong> your email address and a hashed (bcrypt) version of your password.</li>
             <li><strong style={{ color: '#e2e8f0' }}>Download history:</strong> a log of URLs you have downloaded, including timestamps and video titles, used to display your history and enforce download quotas.</li>
@@ -53,13 +53,13 @@ export default function PrivacyPage() {
           <p>We do not sell your personal data. We share data only with:</p>
           <ul style={{ marginTop: 10, paddingLeft: 20, lineHeight: 1.9 }}>
             <li><strong style={{ color: '#e2e8f0' }}>Paddle:</strong> our payment processor, which handles subscription billing. Paddle's privacy policy applies to data they collect during checkout.</li>
-            <li><strong style={{ color: '#e2e8f0' }}>Infrastructure providers:</strong> hosting and database services necessary to operate QuickSnap, bound by data processing agreements.</li>
+            <li><strong style={{ color: '#e2e8f0' }}>Infrastructure providers:</strong> hosting and database services necessary to operate VideoGrabTool, bound by data processing agreements.</li>
             <li><strong style={{ color: '#e2e8f0' }}>Law enforcement:</strong> only when required by applicable law or to protect our legal rights.</li>
           </ul>
         </Section>
 
         <Section title="5. Cookies and Session Data">
-          <p>QuickSnap uses a single HttpOnly session cookie to keep you logged in. This cookie does not track you across other websites and expires when your session ends or you log out. We do not use advertising or third-party tracking cookies.</p>
+          <p>VideoGrabTool uses a single HttpOnly session cookie to keep you logged in. This cookie does not track you across other websites and expires when your session ends or you log out. We do not use advertising or third-party tracking cookies.</p>
         </Section>
 
         <Section title="6. Data Retention">
@@ -71,7 +71,7 @@ export default function PrivacyPage() {
         </Section>
 
         <Section title="8. Children's Privacy">
-          <p>QuickSnap is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal data, please contact us and we will delete it promptly.</p>
+          <p>VideoGrabTool is not directed at children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal data, please contact us and we will delete it promptly.</p>
         </Section>
 
         <Section title="9. Your Rights">

@@ -580,7 +580,7 @@ export default function Home() {
           <span style={{ fontSize: 24 }}>🎉</span>
           <div>
             <p style={{ color: '#00ff88', fontWeight: 700, fontSize: 15, margin: 0 }}>
-              Welcome to QuickSnap Pro!
+              Welcome to VideoGrabTool Pro!
             </p>
             <p style={{ color: '#6b7280', fontSize: 13, margin: 0 }}>
               Your subscription is active — unlimited downloads unlocked.
@@ -627,7 +627,7 @@ export default function Home() {
               display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             }}>
               <div style={{ textAlign: 'left' }}>
-                <div style={{ fontSize: 15, fontWeight: 600, color: '#fff' }}>QuickSnap Pro</div>
+                <div style={{ fontSize: 15, fontWeight: 600, color: '#fff' }}>VideoGrabTool Pro</div>
                 <div style={{ fontSize: 13, color: '#666', marginTop: 2 }}>Unlimited downloads · All qualities</div>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -1053,7 +1053,7 @@ export default function Home() {
       </main>
 
       <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '32px 24px', textAlign: 'center', color: '#555', fontSize: 13 }}>
-        <p style={{ marginBottom: 12 }}>QuickSnap — Powered by yt-dlp · For personal use only · Respect content creators&apos; rights</p>
+        <p style={{ marginBottom: 12 }}>VideoGrabTool — Powered by yt-dlp · For personal use only · Respect content creators&apos; rights</p>
         <p>
           <a href="/terms" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>Terms of Service</a>
           <a href="/privacy" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>Privacy Policy</a>
