@@ -1,5 +1,3 @@
-# Render.com deployment config
-# Uses Docker runtime (Dockerfile in repo installs yt-dlp + ffmpeg).
 services:
   - type: web
     name: videograbtool
@@ -7,20 +5,31 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     healthCheckPath: /
+
     envVars:
       - key: DATABASE_URL
         sync: false
+
       - key: SESSION_SECRET
         sync: false
+
       - key: ADMIN_SECRET
         sync: false
+
+      - key: ADMIN_EMAIL
+        sync: false
+
       - key: NEXT_PUBLIC_APP_URL
         sync: false
+
       - key: LEMONSQUEEZY_API_KEY
         sync: false
+
       - key: LEMONSQUEEZY_STORE_ID
         sync: false
+
       - key: LEMONSQUEEZY_VARIANT_ID
         sync: false
+
       - key: LEMONSQUEEZY_WEBHOOK_SECRET
         sync: false
