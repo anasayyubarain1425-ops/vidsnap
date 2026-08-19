@@ -22,4 +22,4 @@ export async function getSession(): Promise<IronSession<SessionData>> {
   return getIronSession<SessionData>(cookieStore, SESSION_OPTIONS);
 }
 
-export const FREE_DOWNLOAD_LIMIT = 3;
+export const FREE_DOWNLOAD_LIMIT = 5;

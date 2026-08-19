@@ -323,6 +323,12 @@ export default function Home() {
           setDownloadStatus('');
           return;
         }
+        if (errData.code === 'QUALITY_RESTRICTED') {
+          setShowPaywall(true);
+          setStep('ready');
+          setDownloadStatus('');
+          return;
+        }
         throw new Error(errData.error ?? 'Download failed. Please try again.');
       }
 
@@ -509,7 +515,7 @@ export default function Home() {
                 <p style={{ fontSize: 14, color: '#666', marginBottom: 28 }}>
                   {authModal === 'login'
                     ? 'Welcome back — sign in to continue downloading.'
-                    : 'Join free and get 3 downloads instantly.'}
+                    : 'Join free and get 5 downloads instantly.'}
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                   <input
@@ -616,7 +622,7 @@ export default function Home() {
               Upgrade to <span className="gradient-text">Pro</span>
             </h2>
             <p style={{ fontSize: 15, color: '#a0a0a0', marginBottom: 8, lineHeight: 1.6 }}>
-              You&apos;ve used all <strong style={{ color: '#fff' }}>3 free downloads</strong>.
+              You&apos;ve used all <strong style={{ color: '#fff' }}>5 free downloads</strong>.
             </p>
             <p style={{ fontSize: 14, color: '#666', marginBottom: 32 }}>
               Subscribe for unlimited downloads — 1080p, 720p, 480p and audio.
@@ -735,7 +741,7 @@ export default function Home() {
             letterSpacing: '0.5px', marginBottom: 24,
             fontFamily: 'monospace', textTransform: 'uppercase',
           }}>
-            1080p · 720p · 480p · Audio
+            YouTube · TikTok · Instagram · Facebook · 1000+ Sites
           </div>
           <h1 style={{
             fontSize: 'clamp(36px, 6vw, 64px)', fontWeight: 700,
@@ -744,13 +750,19 @@ export default function Home() {
             Download Any Video
             <br />from <span className="gradient-text">Any Website</span>
           </h1>
-          <p style={{ fontSize: 18, color: '#a0a0a0', lineHeight: 1.7, maxWidth: 500, margin: '0 auto 48px' }}>
+          <p style={{ fontSize: 18, color: '#a0a0a0', lineHeight: 1.7, maxWidth: 560, margin: '0 auto 16px' }}>
             {user
               ? user.subscriptionStatus === 'active'
                 ? 'Unlimited downloads. Paste a link and go.'
                 : `${downloadsLeft ?? 0} free download${(downloadsLeft ?? 0) !== 1 ? 's' : ''} remaining — subscribe for unlimited.`
-              : 'Sign up free and get 3 downloads instantly. Subscribe for unlimited.'}
+              : 'Save videos from YouTube, TikTok, Instagram, Facebook, Twitter/X, Vimeo, Dailymotion and 1000+ more sites.'}
           </p>
+          {/* Platform badges */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, marginBottom: 40 }}>
+            {['YouTube', 'TikTok', 'Instagram', 'Facebook', 'Twitter/X', 'Vimeo', 'Dailymotion', '1000+ more'].map(p => (
+              <span key={p} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 20, padding: '4px 12px', fontSize: 12, color: '#aaa' }}>{p}</span>
+            ))}
+          </div>
 
           {/* URL Input */}
           <div style={{ position: 'relative' }}>
@@ -798,7 +810,7 @@ export default function Home() {
               <button style={{ color: '#00d4ff', background: 'none', border: 'none', cursor: 'pointer', fontSize: 13 }} onClick={() => setAuthModal('register')}>
                 Sign up free
               </button>
-              {' '}to start downloading · 3 free downloads included
+              {' '}to start downloading · 5 free downloads included
             </p>
           )}
 
@@ -858,24 +870,39 @@ export default function Home() {
                 SELECT FORMAT & QUALITY
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 10 }}>
-                {videoInfo.formats.map(fmt => (
-                  <button key={fmt.format_id} onClick={() => setSelectedFormat(fmt)} style={{
-                    background: selectedFormat?.format_id === fmt.format_id ? 'rgba(0,212,255,0.1)' : 'rgba(255,255,255,0.03)',
-                    border: `1px solid ${selectedFormat?.format_id === fmt.format_id ? 'rgba(0,212,255,0.5)' : 'rgba(255,255,255,0.08)'}`,
-                    borderRadius: 12, padding: '12px 16px', cursor: 'pointer',
-                    textAlign: 'left', transition: 'all 150ms ease',
-                    display: 'flex', flexDirection: 'column', gap: 4,
-                  }}>
-                    <span style={{ fontSize: 14, fontWeight: 600, color: selectedFormat?.format_id === fmt.format_id ? '#00d4ff' : '#fff' }}>
-                      {fmt.label}
-                    </span>
-                    <span style={{ fontSize: 12, color: '#666' }}>
-                      {fmt.resolution !== 'best' && fmt.resolution !== 'audio only' ? fmt.resolution : ''}
-                      {fmt.filesize ? ` · ${formatBytes(fmt.filesize)}` : ''}
-                    </span>
-                  </button>
-                ))}
+                {videoInfo.formats.map(fmt => {
+                  const heightMatch = fmt.label.match(/(\d+)p/);
+                  const fmtHeight = heightMatch ? parseInt(heightMatch[1], 10) : 0;
+                  const isPremiumQuality = fmtHeight > 720;
+                  const isLocked = isPremiumQuality && !!user && user.subscriptionStatus !== 'active' && !user.onPromo;
+                  const isSelected = selectedFormat?.format_id === fmt.format_id;
+                  return (
+                    <button key={fmt.format_id} onClick={() => { if (isLocked) { setShowPaywall(true); } else { setSelectedFormat(fmt); } }} style={{
+                      background: isSelected ? 'rgba(0,212,255,0.1)' : isLocked ? 'rgba(255,200,0,0.04)' : 'rgba(255,255,255,0.03)',
+                      border: `1px solid ${isSelected ? 'rgba(0,212,255,0.5)' : isLocked ? 'rgba(255,200,0,0.2)' : 'rgba(255,255,255,0.08)'}`,
+                      borderRadius: 12, padding: '12px 16px', cursor: 'pointer',
+                      textAlign: 'left', transition: 'all 150ms ease',
+                      display: 'flex', flexDirection: 'column', gap: 4,
+                      opacity: isLocked ? 0.7 : 1,
+                    }}>
+                      <span style={{ fontSize: 14, fontWeight: 600, color: isSelected ? '#00d4ff' : isLocked ? '#ffc107' : '#fff', display: 'flex', alignItems: 'center', gap: 6 }}>
+                        {isLocked && <span>🔒</span>}
+                        {fmt.label}
+                        {isPremiumQuality && <span style={{ fontSize: 10, background: 'rgba(255,200,0,0.15)', color: '#ffc107', padding: '1px 5px', borderRadius: 4, fontWeight: 700 }}>PRO</span>}
+                      </span>
+                      <span style={{ fontSize: 12, color: '#666' }}>
+                        {fmt.resolution !== 'best' && fmt.resolution !== 'audio only' ? fmt.resolution : ''}
+                        {fmt.filesize ? ` · ${formatBytes(fmt.filesize)}` : ''}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
+              {user && user.subscriptionStatus !== 'active' && !user.onPromo && (
+                <p style={{ fontSize: 12, color: '#666', marginTop: 12, textAlign: 'center' }}>
+                  🔒 <span style={{ color: '#ffc107' }}>1080p, 1440p, 4K</span> — available in <span style={{ color: '#00d4ff', cursor: 'pointer' }} onClick={() => setShowPaywall(true)}>Pro plan</span>
+                </p>
+              )}
             </div>
 
             {/* Download or Paywall Button */}
@@ -929,8 +956,8 @@ export default function Home() {
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 16, marginBottom: 48 }}>
               {[
-                { title: 'Free', price: '$0', period: '', color: '#666', desc: '3 downloads total', features: ['1080p · 720p · 480p', 'Audio extraction', '1000+ supported sites'], cta: 'Sign up free', onClick: () => setAuthModal('register'), primary: false },
-                { title: 'Pro', price: '$10', period: '/month', color: '#00d4ff', desc: 'Unlimited downloads', features: ['All qualities', 'Audio extraction', 'Priority support'], cta: '⚡ Subscribe now', onClick: handleSubscribe, primary: true },
+                { title: 'Free', price: '$0', period: '', color: '#666', desc: '5 downloads total', features: ['Up to 720p quality', 'YouTube, TikTok, Instagram & more', 'Audio extraction (MP3/M4A)', '1000+ supported sites'], cta: 'Sign up free', onClick: () => setAuthModal('register'), primary: false },
+                { title: 'Pro', price: '$10', period: '/month', color: '#00d4ff', desc: 'Unlimited downloads', features: ['All qualities up to 4K', '10,000+ supported sites', 'Audio extraction', 'Priority support', 'No daily limits'], cta: '⚡ Subscribe now', onClick: handleSubscribe, primary: true },
               ].map(plan => (
                 <div key={plan.title} className="glow-card" style={{ padding: 28, position: 'relative', border: plan.primary ? '1px solid rgba(0,212,255,0.4)' : undefined }}>
                   {plan.primary && (
@@ -1049,11 +1076,16 @@ export default function Home() {
       </main>
 
       <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '32px 24px', textAlign: 'center', color: '#555', fontSize: 13 }}>
-        <p style={{ marginBottom: 12 }}>VideoGrabTool — Powered by yt-dlp · For personal use only · Respect content creators&apos; rights</p>
+        <p style={{ marginBottom: 8 }}>VideoGrabTool — Powered by yt-dlp · For personal use only</p>
+        <p style={{ marginBottom: 16, color: '#444', fontSize: 12, maxWidth: 600, margin: '0 auto 16px' }}>
+          ⚠️ Users are solely responsible for ensuring they have the right to download content. VideoGrabTool does not bypass DRM, access private content, or circumvent technical protections. Downloading copyrighted content without permission may violate the law.
+        </p>
         <p>
           <a href="/terms" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>Terms of Service</a>
           <a href="/privacy" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>Privacy Policy</a>
-          <a href="/refunds" style={{ color: '#374151', textDecoration: 'none' }}>Refund Policy</a>
+          <a href="/refunds" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>Refund Policy</a>
+          <a href="/about" style={{ color: '#374151', marginRight: 20, textDecoration: 'none' }}>About</a>
+          <a href="/contact" style={{ color: '#374151', textDecoration: 'none' }}>Contact</a>
         </p>
       </footer>
     </div>

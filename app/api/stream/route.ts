@@ -104,6 +104,19 @@ export async function GET(req: NextRequest) {
   if (isFreeAndExhausted) {
     return NextResponse.json({ error: 'Free download limit reached. Subscribe for unlimited downloads.', code: 'QUOTA_EXCEEDED' }, { status: 402 });
   }
+
+  // ── Quality restriction for free users (max 720p) ─────────────────────────
+  if (!unlimited) {
+    // Check if the requested format is above 720p
+    const heightMatch = rawLabel.match(/(\d+)p/);
+    const requestedHeight = heightMatch ? parseInt(heightMatch[1], 10) : 0;
+    if (requestedHeight > 720) {
+      return NextResponse.json({
+        error: 'Quality above 720p is available for Pro subscribers only. Please subscribe or select 720p or lower.',
+        code: 'QUALITY_RESTRICTED'
+      }, { status: 402 });
+    }
+  }
   // ─────────────────────────────────────────────────────────────────────────
 
   const filename = safeFilename(rawFilename);
